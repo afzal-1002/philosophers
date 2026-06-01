@@ -68,15 +68,6 @@ make
 - **Mutex Synchronization**: https://man7.org/linux/man-pages/man3/pthread_mutex_init.3p.html
 - **Deadlock Prevention**: Classic OS textbook approaches to resource allocation and circular wait prevention
 
-### AI Usage
-
-AI assistance was used for:
-- **Code structure and organization**: Helped design the overall architecture of threads, synchronization primitives, and module layout
-- **Debugging timing and synchronization issues**: Identified race conditions and suggested proper mutex placement
-- **Understanding spec requirements**: Clarified 42 project constraints and pthread API semantics
-- **Code review**: Validated correctness of mutex locking patterns and thread lifecycle management
-
-AI-generated code was thoroughly tested, understood, and validated before integration. All critical synchronization logic was peer-reviewed and adapted based on specific project constraints.
 
 ## Architecture
 
