@@ -1,46 +1,47 @@
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pid_test.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/01 16:27:39 by mafzal            #+#    #+#             */
+/*   Updated: 2026/06/01 22:05:49 by mafzal           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
+static int	fork_and_report(const char *label, int wait_seconds)
+{
+	pid_t	pid;
 
-int main(int argc, char *argv){
+	pid = fork();
+	if (pid < 0)
+	{
+		fprintf(stderr, "Fork Failed\n");
+		return (1);
+	}
+	if (pid == 0)
+		printf("Child%s: %d\n", label, getpid());
+	else
+	{
+		sleep(wait_seconds);
+		printf("Parent%s: %d\n", label, getpid());
+	}
+	return (0);
+}
 
-    pid_t pid1 = fork();
-
-    if (pid1 < 0) {
-        fprintf(stderr, "Fork Failed");
-        return (1);
-    }
-    else if (pid1 == 0) {
-        printf("Child process: %d\n", getpid());
-    }
-    else {
-        sleep(5);
-        printf("Parent process: %d\n", getpid());
-    }
-
-    pid_t pid2 = fork();
-
-    if (pid2 < 0) {
-        fprintf(stderr, "Fork Failed");
-        return (1);
-    }
-    else if (pid2 == 0) {
-        printf("Child process 2: %d\n", getpid());
-    }
-    else {
-        sleep(5);
-        printf("Parent process 2: %d\n", getpid());
-    }
-
-    int pid1_status = waitpid(pid1, NULL, WNOHANG);
-    if (pid1_status == -1) {
-        fprintf(stderr, "Waitpid Failed for pid1\n");
-        return (1);
-    }
-
-    return (0);
+int	main(void)
+{
+	if (fork_and_report("", 5) != 0)
+		return (1);
+	if (fork_and_report(" 2", 5) != 0)
+		return (1);
+	return (0);
 }
