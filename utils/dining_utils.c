@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:27:19 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:25:16 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/01 22:47:08 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 void	eating(t_philo *philo)
 {
 	safe_mutex_handler(&philo->first_fork->fork, LOCK);
-	write_mutex(TAKEN_FIRST_FORK, philo, false);
+	write_mutex(TAKEN_FIRST_FORK, philo);
 	safe_mutex_handler(&philo->second_fork->fork, LOCK);
-	write_mutex(TAKEN_SECOND_FORK, philo, false);
+	write_mutex(TAKEN_SECOND_FORK, philo);
 	set_long_value(&philo->table->table_mutex, &philo->last_meal_time,
 		get_time_in_ms(MILLISECOND));
 	philo->meals_counter++;
-	write_mutex(EATING, philo, false);
+	write_mutex(EATING, philo);
 	precision_usleep(philo->table->time_to_eat, philo->table);
 	if (philo->table->num_meals_required >= 0
 		&& philo->meals_counter == philo->table->num_meals_required)
@@ -40,7 +40,7 @@ void	thinking(t_philo *philo, bool pre_simulation)
 	long	time_to_think;
 
 	if (!pre_simulation)
-		write_mutex(THINKING, philo, false);
+		write_mutex(THINKING, philo);
 	if (philo->table->num_philos % 2 == 0)
 		return ;
 	time_to_eat = philo->table->time_to_eat;
@@ -53,6 +53,6 @@ void	thinking(t_philo *philo, bool pre_simulation)
 
 void	sleeping(t_philo *philo)
 {
-	write_mutex(SLEEPING, philo, false);
+	write_mutex(SLEEPING, philo);
 	precision_usleep(philo->table->time_to_sleep, philo->table);
 }

@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:32:20 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 16:32:21 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/01 22:47:08 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	*monitor_dinner(void *data)
 			{
 				set_bool_value(&table->table_mutex,
 					&table->simulation_should_end, true);
-				write_mutex(DEAD, table->philos + i, DEBUG_MODE);
+				write_mutex(DEAD, table->philos + i);
 			}
 			i++;
 		}

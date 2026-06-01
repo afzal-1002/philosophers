@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 19:33:19 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:26:08 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/01 22:47:08 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	dinner_start(t_table *table)
 		table->simulation_start_time = get_time_in_ms(MILLISECOND);
 		set_long_value(&table->table_mutex, &table->philos[0].last_meal_time,
 			table->simulation_start_time);
-		write_mutex(TAKEN_FIRST_FORK, &table->philos[0], false);
+		write_mutex(TAKEN_FIRST_FORK, &table->philos[0]);
 		usleep(table->time_to_die * 1000);
-		write_mutex(DEAD, &table->philos[0], false);
+		write_mutex(DEAD, &table->philos[0]);
 		return ;
 	}
 	else
@@ -91,7 +91,7 @@ void	*dinner_simulation(void *data)
 		if (get_bool_value(&philo->philo_mutex, &philo->full))
 			break ;
 		eating(philo);
-		write_mutex(SLEEPING, philo, false);
+		write_mutex(SLEEPING, philo);
 		precision_usleep(philo->table->time_to_sleep, philo->table);
 		thinking(philo, false);
 	}

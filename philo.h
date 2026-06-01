@@ -151,10 +151,7 @@ long					get_time_in_ms(t_time_code time_code);
 void					precision_usleep(long duration_in_ms, t_table *table);
 
 /* write_mutex.c */
-void					write_mutex(t_philo_status status, t_philo *philo,
-							bool debug);
-void					write_status_debug(t_philo_status status,
-							t_philo *philo, long elasped_time);
+void				write_mutex(t_philo_status status, t_philo *philo);
 
 /* syncro_utils.c */
 void					increment_long(t_mutex *mutex, long *value);
