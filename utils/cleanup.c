@@ -6,17 +6,18 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:27:03 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:18:31 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/01 22:28:23 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static void	destroy_forks(t_table *table);
+static void	destroy_philos(t_table *table);
+
 /* Free allocated resources and destroy all mutexes. */
 void	cleanup(t_table *table)
 {
-	int	i;
-
 	if (table == NULL)
 		return ;
 	destroy_forks(table);

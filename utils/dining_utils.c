@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:27:19 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:08:37 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/01 22:25:16 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,14 @@ void	thinking(t_philo *philo, bool pre_simulation)
 	long	time_to_think;
 
 	if (!pre_simulation)
-	{
 		write_mutex(THINKING, philo, false);
-	}
 	if (philo->table->num_philos % 2 == 0)
 		return ;
 	time_to_eat = philo->table->time_to_eat;
 	time_to_sleep = philo->table->time_to_sleep;
 	time_to_think = time_to_eat * 2 - time_to_sleep;
 	if (time_to_think < 0)
-	{
 		time_to_think = 0;
-	}
 	precision_usleep(time_to_think * 0.42, philo->table);
 }
 

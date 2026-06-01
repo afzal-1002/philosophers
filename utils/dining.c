@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 19:33:19 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:10:54 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/01 22:26:08 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ static void	start_monitor_and_join(t_table *table)
 
 void	dinner_start(t_table *table)
 {
-	int	i;
-
-	i = 0;
 	if (table->num_philos == 0)
 	{
 		error_exit("At least one philosopher required.");
@@ -100,12 +97,3 @@ void	*dinner_simulation(void *data)
 	}
 	return (NULL);
 }
-
-/* Wrapper function for dinner_philosophers */
-void	dinner_philosophers(t_table *table)
-{
-	dinner_start(table);
-}
-
-/* Optional one-philosopher routine retained for future use.
-   Currently unused. */
