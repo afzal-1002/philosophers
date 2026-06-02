@@ -63,8 +63,8 @@ typedef enum e_philo_status
 	EATING,
 	SLEEPING,
 	THINKING,
-	TAKEN_FIRST_FORK,
-	TAKEN_SECOND_FORK,
+	TAKEN_LEFT_FORK,
+	TAKEN_RIGHT_FORK,
 	DEAD
 }						t_philo_status;
 
@@ -80,8 +80,8 @@ typedef struct s_philo
 	long				meals_counter;
 	bool				full;
 	long				last_meal_time;
-	t_fork				*first_fork;
-	t_fork				*second_fork;
+	t_fork				*left_fork;
+	t_fork				*right_fork;
 	pthread_t			thread_id;
 	t_mutex				philo_mutex;
 	t_table				*table;
@@ -151,7 +151,7 @@ long					get_time_in_ms(t_time_code time_code);
 void					precision_usleep(long duration_in_ms, t_table *table);
 
 /* write_mutex.c */
-void				write_mutex(t_philo_status status, t_philo *philo);
+void					write_mutex(t_philo_status status, t_philo *philo);
 
 /* syncro_utils.c */
 void					increment_long(t_mutex *mutex, long *value);

@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:27:19 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:47:08 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/02 18:59:41 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /* Philosopher actions: eat, sleep, think. */
 void	eating(t_philo *philo)
 {
-	safe_mutex_handler(&philo->first_fork->fork, LOCK);
-	write_mutex(TAKEN_FIRST_FORK, philo);
-	safe_mutex_handler(&philo->second_fork->fork, LOCK);
-	write_mutex(TAKEN_SECOND_FORK, philo);
+	safe_mutex_handler(&philo->left_fork->fork, LOCK);
+	write_mutex(TAKEN_LEFT_FORK, philo);
+	safe_mutex_handler(&philo->right_fork->fork, LOCK);
+	write_mutex(TAKEN_RIGHT_FORK, philo);
 	set_long_value(&philo->table->table_mutex, &philo->last_meal_time,
 		get_time_in_ms(MILLISECOND));
 	philo->meals_counter++;
@@ -29,8 +29,8 @@ void	eating(t_philo *philo)
 	{
 		set_bool_value(&philo->philo_mutex, &philo->full, true);
 	}
-	safe_mutex_handler(&philo->second_fork->fork, UNLOCK);
-	safe_mutex_handler(&philo->first_fork->fork, UNLOCK);
+	safe_mutex_handler(&philo->right_fork->fork, UNLOCK);
+	safe_mutex_handler(&philo->left_fork->fork, UNLOCK);
 }
 
 void	thinking(t_philo *philo, bool pre_simulation)

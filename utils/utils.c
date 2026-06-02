@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:30:53 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:27:03 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/02 15:56:14 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,13 @@ long	get_time_in_ms(t_time_code time_code)
 void	precision_usleep(long duration_in_ms, t_table *table)
 {
 	long	start_time;
-	long	remaining_time;
 
-	remaining_time = 0;
 	start_time = get_time_in_ms(MILLISECOND);
 	while (get_time_in_ms(MILLISECOND) - start_time < duration_in_ms)
 	{
 		if (simulation_end(table))
 			break ;
-		if (remaining_time > 1)
-			usleep(remaining_time * 1000);
-		else
-			usleep(100);
+		usleep(500);
 	}
 }
 

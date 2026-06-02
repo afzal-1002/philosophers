@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:31:08 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:07:44 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/02 21:09:53 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	safe_thread_handler(pthread_t *thread, void *(*start_routine)(void *),
 void	safe_thread_handler(pthread_t *thread, void *(*start_routine)(void *),
 		void *data, t_opcode opcode)
 {
-	if (CREATE == opcode)
+	if (opcode == CREATE)
 		handler_thread_error(pthread_create(thread, NULL, start_routine, data),
 			opcode);
-	else if (JOIN == opcode)
+	else if (opcode == JOIN)
 		handler_thread_error(pthread_join(*thread, NULL), opcode);
-	else if (DETACH == opcode)
+	else if (opcode == DETACH)
 		handler_thread_error(pthread_detach(*thread), opcode);
 	else
 		error_exit("Invalid opcode for thread handler.");

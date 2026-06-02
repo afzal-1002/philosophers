@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:25:21 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 16:25:46 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/02 18:56:34 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	assign_forks(t_philo *philo, t_fork *forks, int index)
 	int	num_philos;
 
 	num_philos = philo->table->num_philos;
-	philo->first_fork = &forks[(index + 1) % num_philos];
-	philo->second_fork = &forks[index];
+	philo->left_fork = &forks[(index + 1) % num_philos];
+	philo->right_fork = &forks[index];
 	if (philo->ph_id % 2 == 0)
 	{
-		philo->first_fork = &forks[index];
-		philo->second_fork = &forks[(index + 1) % num_philos];
+		philo->left_fork = &forks[index];
+		philo->right_fork = &forks[(index + 1) % num_philos];
 	}
 }

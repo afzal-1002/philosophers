@@ -6,7 +6,7 @@
 /*   By: mafzal < mafzal@student.42warsaw.pl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 16:31:38 by mafzal            #+#    #+#             */
-/*   Updated: 2026/06/01 22:07:37 by mafzal           ###   ########.fr       */
+/*   Updated: 2026/06/02 14:50:26 by mafzal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 
 /*  Converts a string to a long integer. It handles optional leading whitespace,
 	an optional sign, and numeric characters.
-
-
-	*  The function returns the converted long integer value.
+	The function returns the converted long integer value.
 	If the input string is invalid
- *  (e.g., contains non-digit characters, is too long,
+	(e.g., contains non-digit characters, is too long,
 	or represents a number outside the range of a long integer),
- *  the function will print an error message and exit the program.
+	the function will print an error message and exit the program.
  */
+
 long		ft_atol(const char *str);
-
 void		parse_input(char **argv, t_table *table);
-
-/* validate_input: return pointer to first numeric character */
 const char	*validate_input(const char *str);
 
 void	parse_input(char **argv, t_table *table)
