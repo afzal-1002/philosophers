@@ -64,11 +64,11 @@ void	assign_forks(t_philo *philo, t_fork *forks, int index)
 	int	num_philos;
 
 	num_philos = philo->table->num_philos;
-	philo->left_fork = &forks[(index + 1) % num_philos];
-	philo->right_fork = &forks[index];
+	philo->first_fork = &forks[(index + 1) % num_philos];
+	philo->second_fork = &forks[index];
 	if (philo->ph_id % 2 == 0)
 	{
-		philo->left_fork = &forks[index];
-		philo->right_fork = &forks[(index + 1) % num_philos];
+		philo->first_fork = &forks[index];
+		philo->second_fork = &forks[(index + 1) % num_philos];
 	}
 }
