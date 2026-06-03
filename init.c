@@ -23,7 +23,6 @@ void	data_init(t_table *table)
 
 	i = 0;
 	table->simulation_start_time = 0;
-	table->simulation_end_time = 0;
 	table->all_thread_ready = false;
 	table->simulation_should_end = false;
 	table->thread_running_count = 0;

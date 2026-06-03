@@ -17,9 +17,9 @@ static void	print_status_message(t_philo_status status, t_philo *philo,
 		long elasped_time)
 {
 	if (TAKEN_LEFT_FORK == status && !simulation_end(philo->table))
-		printf("%-6ld %d has taken left fork\n", elasped_time, philo->ph_id);
+		printf("%-6ld %d has taken a fork\n", elasped_time, philo->ph_id);
 	else if (TAKEN_RIGHT_FORK == status && !simulation_end(philo->table))
-		printf("%-6ld %d has taken right fork\n", elasped_time, philo->ph_id);
+		printf("%-6ld %d has taken a fork\n", elasped_time, philo->ph_id);
 	else if (EATING == status && !simulation_end(philo->table))
 		printf("%-6ld %d is eating\n", elasped_time, philo->ph_id);
 	else if (SLEEPING == status && !simulation_end(philo->table))

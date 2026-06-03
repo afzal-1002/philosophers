@@ -28,7 +28,6 @@ long	get_time_in_ms(t_time_code time_code)
 {
 	struct timeval	tv;
 
-	gettimeofday(&tv, NULL);
 	if (gettimeofday(&tv, NULL) == -1)
 	{
 		error_exit("Failed to get current time.");

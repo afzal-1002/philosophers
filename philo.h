@@ -95,7 +95,6 @@ typedef struct s_table
 	long				time_to_sleep;
 	long				num_meals_required;
 	long				simulation_start_time;
-	long				simulation_end_time;
 	long				thread_running_count;
 	bool				all_thread_ready;
 	bool				simulation_should_end;

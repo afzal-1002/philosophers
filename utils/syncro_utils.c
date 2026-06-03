@@ -16,13 +16,7 @@
 void	wait_all_thread_ready(t_table *table)
 {
 	while (!get_bool_value(&table->table_mutex, &table->all_thread_ready))
-	{
 		usleep(100);
-	}
-	while (!simulation_start(table))
-	{
-		usleep(100);
-	}
 }
 
 void	increment_long(t_mutex *mutex, long *validate_input)

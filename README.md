@@ -2,86 +2,91 @@
 
 # Dining Philosophers
 
-A concurrent simulation of the classic Dining Philosophers synchronization problem using POSIX threads and mutexes.
-
 ## Description
 
-The Dining Philosophers problem is a classic synchronization problem that illustrates challenges in concurrent programming. This project implements a solution where philosophers sit at a round table with forks between them. Each philosopher alternates between thinking, eating, and sleeping. To eat, a philosopher must acquire both adjacent forks (mutexes), creating potential for deadlock and starvation. The simulation demonstrates proper use of mutexes and thread synchronization to prevent these issues.
+Classic concurrency problem: N philosophers sit at a round table, alternating between thinking, eating, and sleeping. Each philosopher needs two adjacent forks to eat. The simulation ends when a philosopher starves or all have eaten the required number of times. The goal is a deadlock-free, starvation-free implementation using POSIX threads and mutexes.
 
-**Goal**: Implement a deadlock-free solution where all philosophers can eat and no one starves, using POSIX threads and mutexes.
+---
 
 ## Instructions
 
 ### Compilation
 
 ```bash
-make
+make        # build
+make re     # rebuild
+make fclean # remove binary and objects
 ```
 
 ### Execution
 
 ```bash
-./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
-./philo 5 800 200 200 7
-./philo 1 100 50 50
+./philo <num_philos> <time_to_die> <time_to_eat> <time_to_sleep> [meals_required]
 ```
 
-**Arguments:**
-- `number_of_philosophers`: Number of philosophers and forks
-- `time_to_die` (ms): Time before starvation if eating hasn't started
-- `time_to_eat` (ms): Duration of eating
-- `time_to_sleep` (ms): Duration of sleeping
-- `[number_of_times_each_philosopher_must_eat]` (optional): Stop condition (all philosophers must eat this many times)
+| Argument | Description |
+|---|---|
+| `num_philos` | Number of philosophers and forks |
+| `time_to_die` (ms) | Time before a philosopher starves since last meal |
+| `time_to_eat` (ms) | Duration of eating (holds 2 forks) |
+| `time_to_sleep` (ms) | Duration of sleeping |
+| `meals_required` (optional) | Stop when all philosophers reach this meal count |
 
-**Examples:**
+### Test Cases
 
 ```bash
-./philo 5 800 200 200
-./philo 5 800 200 200 7
-./philo 4 410 200 200
+./philo 1 800 200 200      # philosopher dies (can't eat alone)
+./philo 5 800 200 200      # no one dies
+./philo 5 800 200 200 7    # stops after each eats 7 times
+./philo 4 410 200 200      # no one dies
+./philo 4 310 200 100      # one philosopher dies
 ```
 
-### Project Structure
+---
 
-- **Main**: Parses input, initializes data structures, spawns philosopher threads and monitor
-- **Philosopher threads**: Execute eat → sleep → think cycle
-- **Monitor thread**: Detects philosopher death and signals simulation end
-- **Synchronization**: Mutexes protect forks, shared state, and output
+## Synchronization Algorithm
 
-### Specifications
+**Even/Odd Fork Assignment** combined with a **dedicated monitor thread**.
 
-**Program name:** `philo`
+- **Odd philosophers** pick up left fork first, then right.
+- **Even philosophers** pick up right fork first, then left.
 
-**Allowed external functions:**
-`memset`, `printf`, `malloc`, `free`, `write`, `usleep`, `gettimeofday`, `pthread_create`, `pthread_detach`, `pthread_join`, `pthread_mutex_init`, `pthread_mutex_destroy`, `pthread_mutex_lock`, `pthread_mutex_unlock`
+This breaks circular wait — the root cause of deadlock — without any extra mutexes.
 
-**Global variables:** Forbidden
+A separate monitor thread watches `last_meal_time` for every philosopher. If `now - last_meal_time > time_to_die`, it sets `simulation_should_end` and prints the death message within 10ms.
 
-**No data races:** All shared state protected by mutexes
+**Why this approach:** Simple, deterministic, and requires no additional primitives beyond the fork mutexes. Separating death detection into its own thread keeps the philosopher loop clean.
+
+---
 
 ## Resources
 
-### Classic References
+- POSIX Threads: https://man7.org/linux/man-pages/man7/pthreads.7.html
+- Mutex API: https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html
+- Dijkstra, E. W. (1971). *Hierarchical ordering of sequential processes.* (Original formulation)
 
-- **Dining Philosophers Problem**: Dijkstra, E. W. (1971). "Hierarchical ordering of sequential processes"
-- **POSIX Threads Documentation**: https://man7.org/linux/man-pages/man7/pthreads.7.html
-- **Mutex Synchronization**: https://man7.org/linux/man-pages/man3/pthread_mutex_init.3p.html
-- **Deadlock Prevention**: Classic OS textbook approaches to resource allocation and circular wait prevention
+### AI Usage (Claude)
+
+| Task | Usage |
+|---|---|
+| Architecture | Discussed deadlock prevention strategies and trade-offs |
+| Debugging | Caught wrong fork message format (`"has taken a fork"` vs `"left/right fork"`) |
+| Code review | Checked subject requirements, norminette, and test cases |
+| Documentation | Structured and wrote this README |
+
+All suggestions were reviewed and tested before use.
+
+---
+
+## Project Management
+
+**Solo project** — mafzal (all design, implementation, testing, documentation).
+
+### What Worked Well
+- Even/odd fork assignment eliminated deadlocks immediately.
+- Monitor as a separate thread kept philosopher logic simple.
+- `precision_usleep` (500µs polling loop) kept death timing within 1ms.
 
 
-## Architecture
-
-- **philo.h**: Central header with type definitions, enums, and function prototypes
-- **philo.c**: Main entry point, argument parsing
-- **init.c**: Memory allocation and initialization
-- **utils/dining.c**: Philosopher thread routine and main simulation loop
-- **utils/dining_utils.c**: Philosopher actions (eating, sleeping, thinking)
-- **utils/monitor.c**: Death detection and simulation end conditions
-- **utils/parsing.c**: Argument validation and conversion
-- **utils/is_digit.c, utils/is_space.c**: Character validation helpers
-- **utils/lock_unlock.c**: Thread-safe state accessors
-- **utils/syncro_utils.c**: Synchronization helpers
-- **utils/thread_safe.c, utils/mutex_safe.c**: Error handling wrappers
-- **utils/utils.c**: Time and sleep utilities
-- **utils/write_mutex.c**: Thread-safe output
-- **utils/cleanup.c**: Resource deallocation
+### Tools Used
+`gcc`, `norminette`, `valgrind`, `make`, `VSCode`

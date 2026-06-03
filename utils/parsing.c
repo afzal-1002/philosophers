@@ -31,9 +31,6 @@ void	parse_input(char **argv, t_table *table)
 	table->time_to_die = ft_atol(argv[2]);
 	table->time_to_eat = ft_atol(argv[3]);
 	table->time_to_sleep = ft_atol(argv[4]);
-	if (table->time_to_die < 60 || table->time_to_eat < 60
-		|| table->time_to_sleep < 60)
-		error_exit("Time parameters must be at least 60 milliseconds.");
 	if (argv[5])
 		table->num_meals_required = ft_atol(argv[5]);
 	else
